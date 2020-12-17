@@ -1,0 +1,46 @@
+	@GetMapping("/stock/{id}")
+	public Stock getStock(@PathVariable long id){
+		
+		return restTemplate.getForObject("http://localhost:9090/api/stock/" + id, Stock.class);
+		
+	}
+	
+	@PostMapping
+	public Stock PostStock(@RequestBody Stock stock){
+		
+		return restTemplate.postForObject("http://localhost:9090/api/stock/" , stock, Stock.class);
+		
+	}
+	
+	@DeleteMapping("/stock/{id}")
+	public void Delete(@PathVariable long id){
+		
+		restTemplate.delete("http://localhost:9090/api/stock/" + id);
+		
+	}
+	
+	//Get all stocks
+	@GetMapping("/stock/")
+	public Stock[] getAllStocks(){
+		
+		return restTemplate.getForObject("http://localhost:9090/api/stock/", Stock[].class);
+		
+	}
+	
+	//Get stock by product ID
+	@GetMapping("/stock/productId/{id}")
+	public Stock getStockByProductId(@PathVariable long id){
+		
+		return restTemplate.getForObject("http://localhost:9090/api/stock/productId/" + id, Stock.class);
+		
+	}
+	
+	//Update
+	@PutMapping("/stock/{id}")
+	public ResponseEntity<@Valid Stock> UpdateStock(@PathVariable("id") Integer id,
+		@Valid @RequestBody Stock stock ){
+		restTemplate.put("http://localhost:9090/api/stock/" + id, stock);
+		
+		return ResponseEntity.ok(stock);
+			
+	}
